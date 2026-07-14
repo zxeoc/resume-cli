@@ -140,34 +140,3 @@ def score_resume(resume_text: str, jd_text: str, client: Optional[OpenAI] = None
         raise RuntimeError(f"Failed to parse LLM response as JSON: {e}\nResponse: {response}")
     except ValidationError as e:
         raise RuntimeError(f"LLM response does not match expected schema: {e}")
-
-
-# Mock data for testing without API
-MOCK_EXTRACTION = ResumeExtraction(
-    name="张三",
-    phone="138-0000-0000",
-    email="zhangsan@example.com",
-    city="北京",
-    education=[
-        Education(
-            school="北京大学",
-            major="计算机科学",
-            degree="本科",
-            graduation_time="2020年6月"
-        )
-    ],
-    skills=["Python", "JavaScript", "SQL", "机器学习"]
-)
-
-MOCK_SCORE = ScoreResult(
-    overall_score=85,
-    skill_score=88,
-    experience_score=80,
-    education_score=90,
-    comment="候选人具备扎实的计算机基础和丰富的开发经验，技能与岗位要求高度匹配。",
-    interview_questions=[
-        "请介绍一个你主导过的全栈项目。",
-        "你对大模型应用有什么实践经验？",
-        "如何保证代码质量和可维护性？"
-    ]
-)

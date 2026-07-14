@@ -118,20 +118,22 @@ class TestLLM:
     
     def test_mock_extraction(self):
         """Test mock extraction data."""
-        from resume_cli.llm import MOCK_EXTRACTION
-        assert MOCK_EXTRACTION.name == "张三"
-        assert MOCK_EXTRACTION.email == "zhangsan@example.com"
-        assert len(MOCK_EXTRACTION.skills) > 0
+        from resume_cli.main import get_mock_extraction
+        result = get_mock_extraction()
+        assert result.name == "张三"
+        assert result.email == "zhangsan@example.com"
+        assert len(result.skills) > 0
     
     def test_mock_score(self):
         """Test mock score data."""
-        from resume_cli.llm import MOCK_SCORE
-        assert 0 <= MOCK_SCORE.overall_score <= 100
-        assert 0 <= MOCK_SCORE.skill_score <= 100
-        assert 0 <= MOCK_SCORE.experience_score <= 100
-        assert 0 <= MOCK_SCORE.education_score <= 100
-        assert MOCK_SCORE.comment
-        assert len(MOCK_SCORE.interview_questions) > 0
+        from resume_cli.main import get_mock_score
+        result = get_mock_score()
+        assert 0 <= result.overall_score <= 100
+        assert 0 <= result.skill_score <= 100
+        assert 0 <= result.experience_score <= 100
+        assert 0 <= result.education_score <= 100
+        assert result.comment
+        assert len(result.interview_questions) > 0
 
 
 class TestCLI:

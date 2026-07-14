@@ -1,5 +1,6 @@
 """CLI entry point for Resume CLI."""
 
+import json
 import logging
 import os
 import sys
@@ -10,7 +11,8 @@ import typer
 from dotenv import load_dotenv
 from rich.console import Console
 
-from .llm import MOCK_EXTRACTION, MOCK_SCORE, extract_resume_data, score_resume
+from .llm import extract_resume_data, score_resume
+from .models import ResumeExtraction, ScoreResult
 from .parser import PDFParseError, extract_text_from_pdf, read_text_file
 from .utils import (
     console,
@@ -22,6 +24,8 @@ from .utils import (
 
 # Load environment variables
 load_dotenv()
+
+MOCK_DATA_DIR = Path(__file__).parent.parent / "mock_data"
 
 # Create Typer app
 app = typer.Typer(
@@ -49,6 +53,24 @@ verbose_option = typer.Option(
     "-v",
     help="Enable verbose logging."
 )
+
+
+def load_mock_data(name: str) -> dict:
+    """Load mock data from JSON file."""
+    mock_file = MOCK_DATA_DIR / f"{name}.json"
+    if not mock_file.exists():
+        raise FileNotFoundError(f"Mock data file not found: {mock_file}")
+    return json.loads(mock_file.read_text(encoding="utf-8"))
+
+
+def get_mock_extraction() -> ResumeExtraction:
+    """Get mock extraction data from file."""
+    return ResumeExtraction(**load_mock_data("extract"))
+
+
+def get_mock_score() -> ScoreResult:
+    """Get mock score data from file."""
+    return ScoreResult(**load_mock_data("score"))
 
 
 @app.command()
@@ -106,7 +128,7 @@ def extract(
         
         if mock:
             logger.info("Using mock data")
-            result = MOCK_EXTRACTION
+            result = get_mock_extraction()
         else:
             logger.info("Calling LLM API for extraction...")
             result = extract_resume_data(text)
@@ -157,7 +179,7 @@ def score(
         
         if mock:
             logger.info("Using mock data")
-            result = MOCK_SCORE
+            result = get_mock_score()
         else:
             logger.info("Calling LLM API for scoring...")
             result = score_resume(resume_text, jd_text)
