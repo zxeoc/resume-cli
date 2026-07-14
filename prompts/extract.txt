@@ -1,0 +1,6 @@
+从简历提取信息，只返回JSON，无其他内容。
+
+简历：{resume_text}
+
+JSON：
+{{"name":"","phone":"","email":"","city":"","education":[{{"school":"","major":"","degree":"","graduation_time":""}}],"skills":[]}}

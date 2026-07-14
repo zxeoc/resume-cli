@@ -3,6 +3,7 @@
 import json
 import logging
 import os
+from pathlib import Path
 from typing import Optional
 
 from openai import OpenAI
@@ -12,23 +13,14 @@ from .models import ResumeExtraction, ScoreResult, Education
 
 logger = logging.getLogger(__name__)
 
-# Extraction prompt template
-EXTRACTION_PROMPT = """从简历提取信息，只返回JSON，无其他内容。
+PROMPTS_DIR = Path(__file__).parent.parent / "prompts"
 
-简历：{resume_text}
 
-JSON：
-{{"name":"","phone":"","email":"","city":"","education":[{{"school":"","major":"","degree":"","graduation_time":""}}],"skills":[]}}"""
-
-# Scoring prompt template
-SCORING_PROMPT = """根据简历和JD评分(0-100)。只返回JSON，无其他内容。
-
-简历：{resume_text}
-
-JD：{jd_text}
-
-JSON：
-{{"overall_score":0,"skill_score":0,"experience_score":0,"education_score":0,"comment":"","interview_questions":[]}}"""
+def load_prompt(name: str) -> str:
+    prompt_file = PROMPTS_DIR / f"{name}.txt"
+    if not prompt_file.exists():
+        raise FileNotFoundError(f"Prompt file not found: {prompt_file}")
+    return prompt_file.read_text(encoding="utf-8")
 
 
 def get_llm_client() -> OpenAI:
@@ -45,7 +37,6 @@ def get_llm_client() -> OpenAI:
         raise ValueError("OPENAI_API_KEY environment variable is not set")
     
     base_url = os.getenv("OPENAI_BASE_URL")
-    model = os.getenv("OPENAI_MODEL", "gpt-3.5-turbo")
     
     client_kwargs = {"api_key": api_key}
     if base_url:
@@ -67,7 +58,6 @@ def call_llm(prompt: str, client: Optional[OpenAI] = None) -> str:
     Raises:
         RuntimeError: If the API call fails.
     """
-
     if client is None:
         client = get_llm_client()
     
@@ -88,8 +78,7 @@ def call_llm(prompt: str, client: Optional[OpenAI] = None) -> str:
     try:
         response = client.chat.completions.create(**call_kwargs)
         
-        message = response.choices[0].message
-        content = message.content
+        content = response.choices[0].message.content
         
         if content is None:
             raise RuntimeError("LLM returned empty response")
@@ -113,7 +102,8 @@ def extract_resume_data(resume_text: str, client: Optional[OpenAI] = None) -> Re
     Raises:
         RuntimeError: If extraction fails.
     """
-    prompt = EXTRACTION_PROMPT.format(resume_text=resume_text)
+    prompt_template = load_prompt("extract")
+    prompt = prompt_template.format(resume_text=resume_text)
     response = call_llm(prompt, client)
     
     try:
@@ -139,7 +129,8 @@ def score_resume(resume_text: str, jd_text: str, client: Optional[OpenAI] = None
     Raises:
         RuntimeError: If scoring fails.
     """
-    prompt = SCORING_PROMPT.format(resume_text=resume_text, jd_text=jd_text)
+    prompt_template = load_prompt("score")
+    prompt = prompt_template.format(resume_text=resume_text, jd_text=jd_text)
     response = call_llm(prompt, client)
     
     try:

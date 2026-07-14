@@ -1,0 +1,8 @@
+根据简历和JD评分(0-100)。只返回JSON，无其他内容。
+
+简历：{resume_text}
+
+JD：{jd_text}
+
+JSON：
+{{"overall_score":0,"skill_score":0,"experience_score":0,"education_score":0,"comment":"","interview_questions":[]}}
