@@ -1,0 +1,101 @@
+# ==========================
+# Python 环境与字节码
+# ==========================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# ==========================
+# 虚拟环境
+# ==========================
+# 根据你的习惯选择保留
+venv/
+.venv/
+env/
+ENV/
+.python-version
+
+# ==========================
+# 打包与分发文件
+# ==========================
+build/
+dist/
+develop-eggs/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# ==========================
+# 测试与覆盖率
+# ==========================
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# ==========================
+# 类型检查与 Linting 工具
+# ==========================
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pyre/
+.pytype/
+.ruff_cache/
+
+# ==========================
+# Jupyter Notebook
+# ==========================
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+
+# ==========================
+# 环境变量与密钥 (非常重要)
+# ==========================
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+secrets.yaml
+secrets.json
+
+
+# VSCode
+.vscode/
+# JetBrains (PyCharm, etc)
+.idea/
+# Sublime Text
+*.sublime-workspace
+# Vim
+*.swp
+*.swo
+*~
+# macOS
+.DS_Store
+# Windows
+Thumbs.db
+Desktop.ini
+
+.omo
