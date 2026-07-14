@@ -1,0 +1,12 @@
+{
+  "overall_score": 85,
+  "skill_score": 88,
+  "experience_score": 80,
+  "education_score": 90,
+  "comment": "候选人具备扎实的计算机基础和丰富的开发经验，技能与岗位要求高度匹配。",
+  "interview_questions": [
+    "请介绍一个你主导过的全栈项目。",
+    "你对大模型应用有什么实践经验？",
+    "如何保证代码质量和可维护性？"
+  ]
+}
