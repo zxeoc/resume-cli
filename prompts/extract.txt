@@ -1,0 +1,22 @@
+请从以下简历文本中提取关键信息，并以严格的 JSON 格式返回。不要包含 Markdown 代码块标记 (如 ```json)，只返回纯 JSON 字符串。
+如果某个字段无法找到，请使用 null 或空列表。
+
+简历内容：
+$resume_text
+
+JSON 结构要求：
+{
+  "name": "姓名",
+  "phone": "电话",
+  "email": "邮箱",
+  "city": "所在城市",
+  "education": [
+    {
+      "school": "学校",
+      "major": "专业",
+      "degree": "学历",
+      "graduation_time": "毕业时间"
+    }
+  ],
+  "skills": ["技能1", "技能2"]
+}

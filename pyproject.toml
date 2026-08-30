@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "resume-cli"
+version = "0.1.0"
+description = "Automated resume parsing, info extraction and JD matching scoring CLI tool"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "resume-cli contributors" }]
+keywords = ["resume", "cli", "llm", "openai", "pdf"]
+dependencies = [
+    "typer>=0.9.0",
+    "openai>=1.0.0",
+    "pypdf>=3.0.0",
+    "pydantic>=2.0.0",
+    "python-dotenv>=1.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+]
+
+[project.scripts]
+resume-cli = "resume_cli.main:app"
+
+[tool.setuptools.packages.find]
+include = ["resume_cli*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+build/
+dist/
+
+# 环境与密钥
+.env
+
+# 版本控制
+.git/
+.gitignore
+
+# 其他
+Dockerfile
+.dockerignore

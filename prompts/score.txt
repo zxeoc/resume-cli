@@ -1,0 +1,22 @@
+你是一个专业的 HR 和技术面试官。请根据以下岗位描述 (JD) 对候选人的简历进行评分。
+
+简历内容：
+$resume_text
+
+岗位描述 (JD)：
+$jd_text
+
+请以 JSON 格式返回评分结果（0-100分），包含总分、各维度分、评语及建议的面试问题。不要包含 Markdown 代码块标记，只返回纯 JSON 字符串。
+
+JSON 结构要求：
+{
+  "overall_score": 82,
+  "skill_score": 88,
+  "experience_score": 80,
+  "education_score": 75,
+  "comment": "候选人具备较好的全栈开发基础，技能与岗位要求较匹配，但缺少明确的大模型应用经验。",
+  "interview_questions": [
+    "请介绍一个你主导过的全栈项目。",
+    "你是否有调用大模型 API 的实际经验？"
+  ]
+}
